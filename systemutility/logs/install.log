@@ -1,0 +1,19 @@
+Starting service operations at  4:20:44.68 
+The System Monitor Service service is not started.
+
+More help is available by typing NET HELPMSG 3521.
+
+Traceback (most recent call last):
+  File "C:\Users\prata\OneDrive\Documents\full-stack-projects\cross-platform-monitoring\systemutility\system_monitor_service.py", line 10, in <module>
+    from daemon import run_daemon
+  File "C:\Users\prata\OneDrive\Documents\full-stack-projects\cross-platform-monitoring\systemutility\daemon.py", line 3, in <module>
+    import requests
+  File "C:\Users\prata\OneDrive\Documents\full-stack-projects\cross-platform-monitoring\systemutility\venv\Lib\site-packages\requests\__init__.py", line 43, in <module>
+    import urllib3
+  File "C:\Users\prata\OneDrive\Documents\full-stack-projects\cross-platform-monitoring\systemutility\venv\Lib\site-packages\urllib3\__init__.py", line 7, in <module>
+    from .connectionpool import HTTPConnectionPool, HTTPSConnectionPool, connection_from_url
+  File "C:\Users\prata\OneDrive\Documents\full-stack-projects\cross-platform-monitoring\systemutility\venv\Lib\site-packages\urllib3\connectionpool.py", line 11, in <module>
+    from .exceptions import (
+  File "C:\Users\prata\OneDrive\Documents\full-stack-projects\cross-platform-monitoring\systemutility\venv\Lib\site-packages\urllib3\exceptions.py", line 2, in <module>
+    from .packages.six.moves.http_client import IncompleteRead as httplib_IncompleteRead
+ModuleNotFoundError: No module named 'urllib3.packages.six.moves'
