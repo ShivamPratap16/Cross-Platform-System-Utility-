@@ -14,3 +14,20 @@
 2025-05-19 04:47:27,182 - INFO - Successfully sent initial status to server
 2025-05-19 04:47:28,208 - INFO - No changes detected in system status
 2025-05-19 04:47:35,598 - INFO - GUI closed but daemon continues running
+2025-05-19 17:20:19,443 - INFO - System monitoring daemon started
+2025-05-19 17:20:25,599 - INFO - Sending initial system status...
+2025-05-19 17:20:25,639 - INFO - Server response: 201
+2025-05-19 17:20:25,639 - INFO - Successfully sent initial status to server
+2025-05-19 17:20:31,527 - INFO - No changes detected in system status
+2025-05-19 17:21:21,030 - INFO - GUI closed but daemon continues running
+2025-05-19 17:21:27,110 - INFO - System monitoring daemon started
+2025-05-19 17:21:33,117 - INFO - Sending initial system status...
+2025-05-19 17:21:33,160 - INFO - Server response: 201
+2025-05-19 17:21:33,160 - INFO - Successfully sent initial status to server
+2025-05-19 17:21:39,073 - INFO - No changes detected in system status
+2025-05-19 17:41:35,039 - INFO - GUI closed but daemon continues running
+2025-05-19 17:41:44,824 - INFO - System monitoring daemon started
+2025-05-19 17:42:16,949 - INFO - Sending initial system status...
+2025-05-19 17:42:16,983 - INFO - Server response: 201
+2025-05-19 17:42:16,983 - INFO - Successfully sent initial status to server
+2025-05-19 17:42:59,175 - INFO - No changes detected in system status

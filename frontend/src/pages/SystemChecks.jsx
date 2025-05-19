@@ -45,9 +45,11 @@ export default function SystemChecks() {
         </div>
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            {system.platform === 'win32' ? 'Windows' : 
-             system.platform === 'darwin' ? 'macOS' : 'Linux'} System
+            {system.platform} System
           </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            ID: {system.machineId?.slice(0,8)}
+          </p>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Last checked: {system.timestamp}
           </p>

@@ -3,54 +3,62 @@ import axios from 'axios';
 const API_BASE = 'http://localhost:5000/api/system';
 
 function getPlatformName(platform) {
-  switch (platform?.toLowerCase()) {
+  // Ensure consistent platform naming
+  const normalizedPlatform = platform?.toLowerCase()?.trim();
+  
+  switch (normalizedPlatform) {
     case 'win32':
+    case 'windows':
     case 'windows_nt':
-      return 'win32';
+      return 'Windows';
     case 'darwin':
-      return 'darwin';
+    case 'macos':
+      return 'macOS';
     case 'linux':
-      return 'linux';
+      return 'Linux';
     default:
-      return platform?.toLowerCase() || 'unknown';
+      return 'Unknown';
+  }
+}
+
+function checkEncryption(report) {
+  const platform = report.diskEncryption?.platform?.toLowerCase();
+  const encryption = report.diskEncryption?.encryption;
+
+  switch (platform) {
+    case 'win32':
+    case 'windows':
+    case 'windows_nt':
+      return encryption?.includes('BitLocker') || false;
+    case 'darwin':
+    case 'macos':
+      return encryption?.includes('FileVault') || false;
+    case 'linux':
+      return encryption?.includes('LUKS') || false;
+    default:
+      return false;
   }
 }
 
 export async function fetchMachineData() {
   try {
     const response = await axios.get(`${API_BASE}/reports`);
-    console.log('API Response:', response.data);
-
     const reports = response.data.data || [];
     
-    if (!Array.isArray(reports)) {
-      console.error('Expected array but got:', typeof reports);
-      return [];
-    }
-
     return reports.map(report => {
-      // Check for specific phrases that indicate encryption
-      const encryptionStatus = report.diskEncryption?.encryption || '';
-      const isEncrypted = 
-        encryptionStatus.includes('BitLocker') || 
-        encryptionStatus.includes('FileVault') || 
-        encryptionStatus.includes('LUKS');
-
-      // Get normalized platform
-      const rawPlatform = report.diskEncryption?.platform || 
-                         report.osUpdate?.platform || 
-                         report.antivirus?.platform || 
-                         'unknown';
-      const platform = getPlatformName(rawPlatform);
+      const platform = getPlatformName(report.diskEncryption?.platform);
+      const isEncrypted = checkEncryption(report);
 
       return {
         id: report._id,
+        machineId: report.machineId,
         timestamp: new Date(report.timestamp).toLocaleString(),
         diskEncrypted: isEncrypted,
         osUpdated: report.osUpdate?.updateStatus?.includes('Up to Date') || false,
         antivirusActive: report.antivirus?.antivirus === 'Enabled',
-        sleepSettingOK: report.sleepSettings?.sleepTimeoutMinutes !== 'Unknown',
+        sleepSettingOK: parseInt(report.sleepSettings?.sleepTimeoutMinutes || '999') <= 30,
         platform,
+        platformRaw: report.diskEncryption?.platform || 'Unknown',
         details: {
           disk: report.diskEncryption?.encryption || 'Unknown',
           os: report.osUpdate?.updateStatus || 'Unknown',

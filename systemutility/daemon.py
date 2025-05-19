@@ -6,6 +6,7 @@ import logging
 import platform
 import sys
 import os
+import uuid
 from datetime import datetime
 from utils.system_checks import collect_all_status
 from config import CHECK_INTERVAL_MIN, API_ENDPOINT
@@ -24,10 +25,26 @@ logging.basicConfig(
     ]
 )
 
+# Add machine ID generation/storage
+def get_machine_id():
+    id_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.machine_id')
+    
+    if os.path.exists(id_file):
+        with open(id_file, 'r') as f:
+            return f.read().strip()
+    
+    # Generate new ID if not exists
+    machine_id = str(uuid.uuid4())
+    with open(id_file, 'w') as f:
+        f.write(machine_id)
+    return machine_id
+
 def send_report(data):
     try:
+        machine_id = get_machine_id()
         # Format data to match schema
         formatted_data = {
+            "machineId": machine_id,
             "timestamp": datetime.now().isoformat(),
             "diskEncryption": {
                 "encryption": data["encryption"]["encryption"],

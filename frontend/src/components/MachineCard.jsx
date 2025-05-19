@@ -77,21 +77,14 @@ function MachineCard({ machine }) {
   return (
     <>
       <div 
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-sm relative overflow-hidden
-          transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg
-          before:absolute before:inset-0 before:z-0 before:bg-gradient-to-r 
-          before:from-transparent before:via-white/20 before:to-transparent
-          before:translate-x-[-200%] hover:before:translate-x-[200%]
-          before:transition-transform before:duration-1000"
+        className="bg-white dark:bg-gray-800 rounded-xl shadow-sm relative overflow-hidden hover:shadow-md transition-all duration-200"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className="p-6 relative z-10">
-          {/* Header with View Icon */}
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg
-                transition-transform duration-300 hover:rotate-12">
+              <div className="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
                 {getSystemIcon()}
               </div>
               <div>
@@ -99,25 +92,17 @@ function MachineCard({ machine }) {
                   {getPlatformName(machine.platform)} System
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
+                  ID: {machine.machineId.slice(0,8)}...
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   Last Check-in: {machine.timestamp}
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setShowModal(true)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700
-                transition-all duration-200 transform hover:scale-110
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              aria-label="View system details"
-            >
-              <FiEye className={`text-gray-500 dark:text-gray-400 text-xl
-                transition-transform duration-300 ${isHovered ? 'scale-110' : ''}`}
-              />
-            </button>
           </div>
 
           {/* Status Grid */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 mb-4">
             <StatusBadge 
               status={machine.diskEncrypted} 
               label="Disk Encryption" 
@@ -135,6 +120,18 @@ function MachineCard({ machine }) {
               label="Sleep Settings" 
             />
           </div>
+
+          {/* View Details Button */}
+          <button
+            onClick={() => setShowModal(true)}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 mt-2 
+              bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 
+              dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50 
+              transition-colors duration-200"
+          >
+            <FiEye className="text-lg" />
+            View Details
+          </button>
         </div>
       </div>
 
